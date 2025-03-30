@@ -58,6 +58,7 @@ async fn measure_latency(url: &str) -> Result<f64, Box<dyn Error>> {
 
     if !output.status.success() {
         let stderr = String::from_utf8_lossy(&output.stderr);
+        info!("{}", stderr.to_string());
         return Err(format!("Ping command failed: {}", stderr).into());
     }
 
