@@ -62,6 +62,8 @@ async fn measure_latency(url: &str) -> Result<f64, Box<dyn Error>> {
     }
 
     let stdout = String::from_utf8_lossy(&output.stdout);
+    let string = stdout.to_string();
+    info!("{}", string);
     // This regex handles both Linux ("rtt") and macOS ("round-trip") summary lines.
     let re = Regex::new(r"(?:rtt|round-trip).* = ([0-9.]+)/([0-9.]+)/([0-9.]+)/([0-9.]+) ?ms")?;
     if let Some(captures) = re.captures(&stdout) {
@@ -72,6 +74,7 @@ async fn measure_latency(url: &str) -> Result<f64, Box<dyn Error>> {
             return Ok(avg);
         }
     }
+
     Err("Failed to parse ping output".into())
 }
 
